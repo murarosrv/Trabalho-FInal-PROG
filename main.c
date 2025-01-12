@@ -1,4 +1,7 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<string.h>
 
 typedef struct{
 	char nome[50];
@@ -6,6 +9,30 @@ typedef struct{
 	char unidadeDeMedida [20];
 	float quantidade;
 }Insumo;
+
+char* getDateTime() {
+    time_t now;
+    struct tm *timeinfo;
+    static char dateTime[20];
+    
+    time(&now);
+    timeinfo = localtime(&now);
+    
+    strftime(dateTime, sizeof(dateTime), "%d/%m/%Y %H:%M:%S", timeinfo);
+    return dateTime;
+}
+
+void registrarLog(char* operacao) {
+    FILE *logFile = fopen("logs.txt", "a");
+    if(logFile == NULL) {
+        printf("ERRO ao abrir arquivo de log\n");
+        return;
+    }
+    
+    char *dataHora = getDateTime();
+    fprintf(logFile, "Operação:%s feita %s horas.\n", operacao, dataHora);
+    fclose(logFile);
+}
 
 void cadastrarInsumo (){
 	FILE *arquivo = fopen("insumos.txt", "a");
@@ -26,10 +53,109 @@ void cadastrarInsumo (){
 
     fprintf(arquivo, "%s;%s;%s;%.2f\n", insumo.nome, insumo.categoria, insumo.unidadeDeMedida, insumo.quantidade);
     fclose(arquivo);
-
+    registrarLog("Cadastro do insumo %s\n", insumo.nome);
     printf("Cadastrado do insumo realizado com sucesso!\n");
 }
 
+void alterarInsumo() {
+    FILE *arquivo = fopen("insumos.txt", "r");
+    if(arquivo == NULL) {
+        printf("ERRO ao abrir o arquivo\n");
+        return;
+    }
+
+    Insumo insumos[100];
+    int numInsumos = 0;
+    char linha[200];
+
+
+    while(fgets(linha, sizeof(linha), arquivo)) {
+        sscanf(linha, "%[^;];%[^;];%[^;];%f", 
+            insumos[numInsumos].nome,
+            insumos[numInsumos].categoria,
+            insumos[numInsumos].unidadeDeMedida,
+            &insumos[numInsumos].quantidade
+        );
+        numInsumos++;
+    }
+    fclose(arquivo);
+
+    printf("\nInsumos cadastrados:\n");
+    for(int i = 0; i < numInsumos; i++) {
+        printf("%d - %s\n", i+1, insumos[i].nome);
+    }
+
+
+    int escolha;
+    printf("\nEscolha o numero do insumo para alterar (1-%d): ", numInsumos);
+    scanf("%d", &escolha);
+    escolha--;
+
+    if(escolha < 0 || escolha >= numInsumos) {
+        printf("Opcao invalida!\n");
+        return;
+    }
+
+
+    int opcaoMod;
+    printf("\nO que deseja alterar?\n");
+    printf("1 - Nome\n");
+    printf("2 - Categoria\n");
+    printf("3 - Unidade de Medida\n");
+    printf("4 - Quantidade\n");
+    printf("5 - Todos os campos\n");
+    printf("Escolha: ");
+    scanf("%d", &opcaoMod);
+
+    char nomeAntigo[50];
+    strcpy(nomeAntigo, insumos[escolha].nome);
+
+    switch(opcaoMod) {
+        case 1:
+            printf("Novo nome: ");
+            scanf(" %[^\n]", insumos[escolha].nome);
+            break;
+        case 2:
+            printf("Nova categoria: ");
+            scanf(" %[^\n]", insumos[escolha].categoria);
+            break;
+        case 3:
+            printf("Nova unidade de medida: ");
+            scanf(" %[^\n]", insumos[escolha].unidadeDeMedida);
+            break;
+        case 4:
+            printf("Nova quantidade: ");
+            scanf("%f", &insumos[escolha].quantidade);
+            break;
+        case 5:
+            printf("Novo nome: ");
+            scanf(" %[^\n]", insumos[escolha].nome);
+            printf("Nova categoria: ");
+            scanf(" %[^\n]", insumos[escolha].categoria);
+            printf("Nova unidade de medida: ");
+            scanf(" %[^\n]", insumos[escolha].unidadeDeMedida);
+            printf("Nova quantidade: ");
+            scanf("%f", &insumos[escolha].quantidade);
+            break;
+        default:
+            printf("Opcao invalida!\n");
+            return;
+    }
+
+ 
+    arquivo = fopen("insumos.txt", "w");
+    for(int i = 0; i < numInsumos; i++) {
+        fprintf(arquivo, "%s;%s;%s;%.2f\n",
+            insumos[i].nome,
+            insumos[i].categoria,
+            insumos[i].unidadeDeMedida,
+            insumos[i].quantidade
+        );
+    }
+    fclose(arquivo);
+    registrarLog("Alteracao do insumo %s\n", nomeAntigo);
+    printf("Insumo alterado com sucesso!\n");
+}
 
 int main(){
     int opcao;
@@ -40,6 +166,17 @@ int main(){
         printf("3 - Excluir Cadastro de Insumo\n");
         printf("4 - Listar Insumos\n");
         printf("0 - Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+            case 1:
+                cadastrarInsumo();
+                break;
+            case 2:
+                alterarInsumo();
+                break;
+        }
     }while(opcao != 0);
 
 
