@@ -14,10 +14,10 @@ char* getDateTime() {
     time_t now;
     struct tm *timeinfo;
     static char dateTime[20];
-    
+
     time(&now);
     timeinfo = localtime(&now);
-    
+
     strftime(dateTime, sizeof(dateTime), "%d/%m/%Y %H:%M:%S", timeinfo);
     return dateTime;
 }
@@ -28,7 +28,7 @@ void registrarLog(char* operacao) {
         printf("ERRO ao abrir arquivo de log\n");
         return;
     }
-    
+
     char *dataHora = getDateTime();
     fprintf(logFile, "Operação:%s feita %s horas.\n", operacao, dataHora);
     fclose(logFile);
@@ -53,7 +53,7 @@ void cadastrarInsumo (){
 
     fprintf(arquivo, "%s;%s;%s;%.2f\n", insumo.nome, insumo.categoria, insumo.unidadeDeMedida, insumo.quantidade);
     fclose(arquivo);
-    registrarLog("Cadastro do insumo %s\n", insumo.nome);
+    registrarLog("Cadastro de insumo \n");
     printf("Cadastrado do insumo realizado com sucesso!\n");
 }
 
@@ -70,7 +70,7 @@ void alterarInsumo() {
 
 
     while(fgets(linha, sizeof(linha), arquivo)) {
-        sscanf(linha, "%[^;];%[^;];%[^;];%f", 
+        sscanf(linha, "%[^;];%[^;];%[^;];%f",
             insumos[numInsumos].nome,
             insumos[numInsumos].categoria,
             insumos[numInsumos].unidadeDeMedida,
@@ -142,7 +142,7 @@ void alterarInsumo() {
             return;
     }
 
- 
+
     arquivo = fopen("insumos.txt", "w");
     for(int i = 0; i < numInsumos; i++) {
         fprintf(arquivo, "%s;%s;%s;%.2f\n",
@@ -153,7 +153,7 @@ void alterarInsumo() {
         );
     }
     fclose(arquivo);
-    registrarLog("Alteracao do insumo %s\n", nomeAntigo);
+    registrarLog("Alteracao do insumo \n");
     printf("Insumo alterado com sucesso!\n");
 }
 

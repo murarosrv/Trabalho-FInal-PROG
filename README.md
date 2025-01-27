@@ -28,3 +28,7 @@ V. Registro de
 
 
 Vamos usar duas abordagens para os arquivos, primeiro para os registro de estoque vamos usar arquivos binarios e assim podemos usar com amsi eficiencia as structs e mais agilidade, para os menus de moviemntacao para que o usuario possa ler, vamos usar arquivos de texto.
+
+Toda alteração que for feita usaremos o metodo de log, assim criamos funções que vão atualizar o usuário caso algo seja modificado.
+
+
