@@ -34,4 +34,8 @@ A funcao de tempo que usamos foi através de pesquisas conseguimos formula-la
 
 Optamos por usarmos apenas um arquivo que vai ter todo o objeto em si, logo não usamos as funções de alocação dinâmica (malloc e calloc)
 
-Em certa parte utilizamos a função de strcpy que vai copiar o conteúdo antes de ser edistado ou excluído e assim podemos utilizar essa opção posteriormente para podermos mostrar para o usuário caso ele queira saber como estava antes da edição, porem não foi pertinente implementar isso. 
+Em certa parte utilizamos a função de strcpy que vai copiar o conteúdo antes de ser edistado ou excluído e assim podemos utilizar essa opção posteriormente para podermos mostrar para o usuário caso ele queira saber como estava antes da edição, porem não foi pertinente implementar isso.
+
+Trabalho Final de prog I
+-Felipe Muraro Silva Vilela
+-Sophia Camargo Tercette
