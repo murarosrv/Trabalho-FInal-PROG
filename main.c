@@ -53,7 +53,7 @@ void cadastrarInsumo (){
 
     fprintf(arquivo, "%s;%s;%s;%.2f\n", insumo.nome, insumo.categoria, insumo.unidadeDeMedida, insumo.quantidade);
     fclose(arquivo);
-    registrarLog("Cadastro de insumo \n");
+    registrarLog("Cadastro de insumo");
     printf("Cadastrado do insumo realizado com sucesso!\n");
 }
 
@@ -153,7 +153,7 @@ void alterarInsumo() {
         );
     }
     fclose(arquivo);
-    registrarLog("Alteracao do insumo \n");
+    registrarLog("Alteracao do insumo");
     printf("Insumo alterado com sucesso!\n");
 }
 
