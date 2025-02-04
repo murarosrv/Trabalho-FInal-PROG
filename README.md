@@ -26,9 +26,12 @@ V. Registro de
 - quantidade adicionada ou usada
 - quantidade total apos a movimentacao
 
+____________________________________________________________________________
+A lógica que usamos foi a de criar uma função log para que todo e qualquer registro seja feito e guardado, tal função é ligada a todas as outras ja que a mesma possui o objetivo de armazenar logs em um arquivo.
 
-Vamos usar duas abordagens para os arquivos, primeiro para os registro de estoque vamos usar arquivos binarios e assim podemos usar com amsi eficiencia as structs e mais agilidade, para os menus de moviemntacao para que o usuario possa ler, vamos usar arquivos de texto.
+A funcao de tempo que usamos foi através de pesquisas conseguimos formula-la
+[base func dataTime](https://stackoverflow.com/questions/1442116/how-to-get-the-date-and-time-values-in-a-c-program)
 
-Toda alteração que for feita usaremos o metodo de log, assim criamos funções que vão atualizar o usuário caso algo seja modificado.
+Optamos por usarmos apenas um arquivo que vai ter todo o objeto em si, logo não usamos as funções de alocação dinâmica (malloc e calloc)
 
-
+Em certa parte utilizamos a função de strcpy que vai copiar o conteúdo antes de ser edistado ou excluído e assim podemos utilizar essa opção posteriormente para podermos mostrar para o usuário caso ele queira saber como estava antes da edição, porem não foi pertinente implementar isso. 

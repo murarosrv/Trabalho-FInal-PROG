@@ -168,9 +168,9 @@ void excluirInsumo() {
     int numInsumos = 0;
     char linha[200];
 
-    
+
     while(fgets(linha, sizeof(linha), arquivo)) {
-        sscanf(linha, "%[^;];%[^;];%[^;];%f", 
+        sscanf(linha, "%[^;];%[^;];%[^;];%f",
             insumos[numInsumos].nome,
             insumos[numInsumos].categoria,
             insumos[numInsumos].unidadeDeMedida,
@@ -180,13 +180,13 @@ void excluirInsumo() {
     }
     fclose(arquivo);
 
-    
+
     printf("\nInsumos cadastrados:\n");
     for(int i = 0; i < numInsumos; i++) {
         printf("%d - %s\n", i+1, insumos[i].nome);
     }
 
-    
+
     int escolha;
     printf("\nEscolha o numero do insumo para excluir (1-%d): ", numInsumos);
     scanf("%d", &escolha);
@@ -200,13 +200,13 @@ void excluirInsumo() {
     char nomeExcluido[50];
     strcpy(nomeExcluido, insumos[escolha].nome);
 
-    
+
     for(int i = escolha; i < numInsumos - 1; i++) {
         insumos[i] = insumos[i + 1];
     }
     numInsumos--;
 
-   
+
     arquivo = fopen("insumos.txt", "w");
     for(int i = 0; i < numInsumos; i++) {
         fprintf(arquivo, "%s;%s;%s;%.2f\n",
@@ -240,7 +240,7 @@ void listarInsumos() {
     printf("----------------------------------------------------------------\n");
 
     while(fgets(linha, sizeof(linha), arquivo)) {
-        sscanf(linha, "%[^;];%[^;];%[^;];%f", 
+        sscanf(linha, "%[^;];%[^;];%[^;];%f",
             insumo.nome,
             insumo.categoria,
             insumo.unidadeDeMedida,
@@ -257,7 +257,7 @@ void listarInsumos() {
 
     printf("----------------------------------------------------------------\n");
     printf("Total de insumos: %d\n", contador);
-    
+
     fclose(arquivo);
     registrarLog("Listagem de insumos");
 }
